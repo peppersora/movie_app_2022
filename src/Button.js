@@ -1,26 +1,47 @@
-const root = document.getElementById("root");
 
 function App () {
-    const [counter, setCounter] = React.useState(0);
-    // 왜 modifier가 필요한지
-    const onclick = () => {
-        setCounter(495060);
-
-    }
+    const [amount, setAmount] = React.useState();
+    const [flipped, setFlipped ] = React.useState(false);
+    const onChange = (event) => {
+        setAmount(event.target.value);
+    };
+    const reset = setAmount(0);
+    const onFlip = () => {
+        reset();
+        setFlipped((current) => !current)
+    };
 
     return(
         <div>
-        <h3>Total clicks:{counter}</h3>
-        <button onclick={onclick}>Click me</button>
-        {/* onclick이벤트 리스너가 counterUp 이라는 함수를 이용해서 
-        click 시 count 증가 */}
+            <div>
+        <h1 className="hi">Super Converter</h1>
+        <label htmlfor="minutes">Minutes</label>
+        <input 
+        value={flipped ? amount*60 : amount }
+        placeholder="Minutes" 
+        type="number"
+        onChange={onChange}
+        disabled={flipped}
+        />
+            </div>
+        <div>
+        <label htmlfor="hours">Hours</label>
+        <input 
+        value={flipped ? amount : amount/60}
+        id="hours" 
+        placeholder="Hours" 
+        type="number"
+        disabled={!flipped}
+        onChange={onChange}
+        />
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlip}>Flip</button>
     </div>
     );
 }
+const root = document.getElementById("root");
 ReactDOM.render(<App/>,root);
-// container를 rerendering 해줘야지 count가 증가하는데 지금 상황에서는
-// 그렇지 못함
-
 
 
 
