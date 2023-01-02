@@ -39,7 +39,48 @@ function MinutesToHours() {
     ); 
 }
 function KmToMiles() {
-    // return <h3>KM 2 M</h3> <= 코드챌린지
+    // 총양
+    const [amount, setAmount] = React.useState();
+    // 변환기
+    const [inverted, setInverted] = React.useState();
+    // functions
+    const onChange = (event) => {
+        setAmount(event.target.value);
+    };
+   
+    const reset = () => setAmount(0);
+    
+    const onFlip = () =>{
+        reset();
+        setInverted((current) => (!current))
+    };
+
+    return(
+        <><div>
+        {/* km */}
+            <div>
+                <label htmlfor="Km">Km</label>
+                <input
+                    value={inverted ? amount / 0.621371 : amount}
+                    placeholder="km"
+                    type="number"
+                    onChange={onChange}
+                    disabled={inverted} />
+            </div>
+        {/* miles */}
+            <div>
+                <label htmlfor="Miles">Miles</label>
+                <input
+                    value={inverted ? amount * 0.621371 : amount}
+                    placeholder="Miles"
+                    type="number"
+                    onChange={onChange}
+                    disabled={!inverted} />
+            </div>
+        </div>
+        <button onClick={reset}>Reset</button>
+        <button onClick={onFlip}>{inverted ? "Turn back" : "Invert"}</button></>
+    );
 }
 // root div 가 됨
 function App () {
