@@ -1,42 +1,65 @@
-
-function App () {
+function MinutesToHours() {
     const [amount, setAmount] = React.useState();
-    const [flipped, setFlipped ] = React.useState(false);
+    const [inverted, setInverted ] = React.useState(false);
     const onChange = (event) => {
         setAmount(event.target.value);
     };
     const reset = setAmount(0);
     const onFlip = () => {
         reset();
-        setFlipped((current) => !current)
+        setInverted((current) => !current)
     };
-
+    
     return(
         <div>
             <div>
-        <h1 className="hi">Super Converter</h1>
         <label htmlfor="minutes">Minutes</label>
         <input 
-        value={flipped ? amount*60 : amount }
+        value={inverted ? amount*60 : amount }
         placeholder="Minutes" 
         type="number"
         onChange={onChange}
-        disabled={flipped}
+        disabled={inverted}
         />
             </div>
         <div>
         <label htmlfor="hours">Hours</label>
         <input 
-        value={flipped ? amount : amount/60}
+        value={inverted ? amount : amount/60}
         id="hours" 
         placeholder="Hours" 
         type="number"
-        disabled={!flipped}
+        disabled={!inverted}
         onChange={onChange}
         />
         </div>
         <button onClick={reset}>Reset</button>
-        <button onClick={onFlip}>Flip</button>
+        <button onClick={onFlip}>{inverted ? "Turn back" : "Invert"}</button>
+    </div>
+    ); 
+}
+function KmToMiles() {
+    // return <h3>KM 2 M</h3> <= 코드챌린지
+}
+// root div 가 됨
+function App () {
+    // 첫번째 item은 index가 되고 두번째 item은 (setIndex)그 데이터를 수정하는 함수
+    const [index, setIndex] = React.useState("-1");
+    const onSelect = (event) =>{
+        setIndex(event.target.value);
+    }
+    return(
+        <div>
+        <h1>Super Converter</h1>  
+        <select value={index} onChange={onSelect}>
+            <option value="-1">Select your units</option>
+            <option value="0">Minutes & Hours</option>
+            <option value="1">Km & Miles</option>
+        </select>
+        {/* component안에 js식을 사용할때는 중괄호 */}
+        {index === "-1" ? "Please Select your units" : null}
+     { index === "0" ? <MinutesToHours/> : null}
+    { index === "1" ? <KmToMiles/> : null}
     </div>
     );
 }
