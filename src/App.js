@@ -1,40 +1,29 @@
 import { useEffect, useState } from "react";
 
-function App(){
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((prev) => prev+1);
-  const onchange = (event) => {
-    setKeyword(event.target.value);
-  }
+//무엇을 숨기고 보여줄 것인가?
+function Hello(){
   useEffect(() => {
-    console.log("I run only once");
-
+    console.log("created :)");
+    // 우리가 할것은 component가 destory될때 실행될 
+    // function만들기 => clean up function
+    // 아래 코드한줄을 이용해 언제 만들어졌고 언제 destroy됐는지 알수있다
+    return () => console.log("destroyed :(")
   },[]);
-  
-  useEffect(() =>{
-    console.log("I run when 'keyword' changes.")
-  },[keyword]);
 
-  useEffect(() => {
-   console.log("I run when 'Counter' changes.");
-  },[counter]);
+  return(
+    <h1>Hello</h1>
+  );
+}
 
-  useEffect(() => {
-    console.log("I run when keyword & counter changes.");
-   },[keyword,counter]);
- 
-
+function App(){
+  const [showing, setShowing] = useState(false);
+  const onClick = () => setShowing((prev) => !prev);
    return(
     <div>
-      <input 
-      value={keyword}
-      onchange={onchange} 
-      type="text" 
-      placeholder="Search here"
-      />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>Click me</button>
+      {/* js사용시 중괄호 꼭 기억하기 
+      위에서 만든 hello function을 app에서 실행시킬것임*/}
+      {showing ? <Hello/> : null }
+     <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
