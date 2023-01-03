@@ -7,16 +7,23 @@ function App(){
   const onchange = (event) => {
     setKeyword(event.target.value);
   }
-  console.log("I run all the time");
+  useEffect(() => {
+    console.log("I run only once");
+
+  },[]);
   
   useEffect(() =>{
-    console.log("CALL THE API...");
-  },[]);
-  useEffect(() => {
-    if(keyword !== "" && keyword.length >5) {
-      console.log("SEARCH FOR", keyword)
-    }
+    console.log("I run when 'keyword' changes.")
   },[keyword]);
+
+  useEffect(() => {
+   console.log("I run when 'Counter' changes.");
+  },[counter]);
+
+  useEffect(() => {
+    console.log("I run when keyword & counter changes.");
+   },[keyword,counter]);
+ 
 
    return(
     <div>
