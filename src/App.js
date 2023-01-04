@@ -1,33 +1,39 @@
 import { useEffect, useState } from "react";
 
-//무엇을 숨기고 보여줄 것인가?
-function Hello(){
-
-  function byFn(){
-    console.log("bye :(");
-  }
-
-  function hiFn(){
-    console.log("created :)");
-    return byFn;
-  }
-
-  useEffect( hiFn,[]);
-   
-  return(
-    <h1>Hello</h1>
-  );
-}
 
 function App(){
-  const [showing, setShowing] = useState(false);
-  const onClick = () => setShowing((prev) => !prev);
-   return(
+  const [todo, setToDo] = useState("");
+  // 여러개의 todo를 만들것임
+  const [todos, setToDos] = useState([]);
+  const onchange = (event) => setToDo(event.target.value);
+  // console.log(todo); 
+  const onsubmit = (event) => {
+    event.preventDefault()
+    /* todos의 array를 수정하고 싶다면 수정하는 함수 즉, setToDos를
+    수정해야한다. todos자체를 수정해서는 안됨*/
+    if(todo === ""){
+      return;
+    }
+    setToDos((currentArray) => [todo, ...currentArray]);
+    setToDo("");
+  };
+    
+    return(
     <div>
-      {/* js사용시 중괄호 꼭 기억하기 
-      위에서 만든 hello function을 app에서 실행시킬것임*/}
-      {showing ? <Hello/> : null }
-     <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
+      <h1>My To Dos({todos.length})</h1>
+      <form onSubmit={onsubmit}>
+      <input 
+      value={todo}
+      onChange={onchange}
+      type="text" placeholder="Write your to do..."/>
+      <button>Add To Do</button>
+    </form>
+    <hr/>
+    <ul>
+    {todos.map((item,index) => 
+    <li key={index}>{item}</li>
+    )}
+    </ul>
     </div>
   );
 }
