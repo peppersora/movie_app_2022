@@ -6,9 +6,11 @@ function App(){
   // 여러개의 todo를 만들것임
   const [todos, setToDos] = useState([]);
   const onchange = (event) => setToDo(event.target.value);
-  // console.log(todo); 
+  //event.target.value = todo
+  console.log(todo); 
+  // 삭제 버튼만들기(기능)
   const onsubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     /* todos의 array를 수정하고 싶다면 수정하는 함수 즉, setToDos를
     수정해야한다. todos자체를 수정해서는 안됨*/
     if(todo === ""){
@@ -16,9 +18,15 @@ function App(){
     }
     setToDos((currentArray) => [todo, ...currentArray]);
     setToDo("");
-  };
     
-    return(
+  };
+  const deleteBtn = (event) =>{
+    let li = event.target.parentElement;
+    li.remove();
+    
+  }
+  
+  return(
     <div>
       <h1>My To Dos({todos.length})</h1>
       <form onSubmit={onsubmit}>
@@ -31,7 +39,10 @@ function App(){
     <hr/>
     <ul>
     {todos.map((item,index) => 
-    <li key={index}>{item}</li>
+    <li key={index}>{item}
+    {/* 삭제버튼 */}
+    <button onClick={deleteBtn}>❌</button>
+    </li>
     )}
     </ul>
     </div>
