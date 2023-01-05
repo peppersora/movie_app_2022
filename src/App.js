@@ -2,50 +2,38 @@ import { useEffect, useState } from "react";
 
 
 function App(){
-  const [todo, setToDo] = useState("");
-  // 여러개의 todo를 만들것임
-  const [todos, setToDos] = useState([]);
-  const onchange = (event) => setToDo(event.target.value);
-  //event.target.value = todo
-  console.log(todo); 
-  // 삭제 버튼만들기(기능)
-  const onsubmit = (event) => {
-    event.preventDefault();
-    /* todos의 array를 수정하고 싶다면 수정하는 함수 즉, setToDos를
-    수정해야한다. todos자체를 수정해서는 안됨*/
-    if(todo === ""){
-      return;
-    }
-    setToDos((currentArray) => [todo, ...currentArray]);
-    setToDo("");
-    
-  };
-  const deleteBtn = (event) =>{
-    let li = event.target.parentElement;
-    li.remove();
-    
-  }
+  // 로딩을 위한 state 
+  // loading의 기본값은 true로 설정
+  const [loading, setLoading] = useState(true);
+  // 코인리스트를 위한 state
+  const [coins, setCoins] = useState([]);
+  // 2. 코인 api 준비
+  // useEffect를 사용해서 한번만 실행시킬것이므로 빈 배열을 준비
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+    .then((response) => response.json())
+    .then((json) => {
+      setCoins(json);
+      setLoading(false); 
+    });
+  },[]);
   
   return(
-    <div>
-      <h1>My To Dos({todos.length})</h1>
-      <form onSubmit={onsubmit}>
-      <input 
-      value={todo}
-      onChange={onchange}
-      type="text" placeholder="Write your to do..."/>
-      <button>Add To Do</button>
-    </form>
-    <hr/>
+   <div>
+    <h1>The Coins!({coins.length})</h1>
+    {loading ? <strong>Loading...</strong> : null}
     <ul>
-    {todos.map((item,index) => 
-    <li key={index}>{item}
-    {/* 삭제버튼 */}
-    <button onClick={deleteBtn}>❌</button>
-    </li>
-    )}
+      {/* map(value,index)을 이용할건데 id가 있기때문에 index는 사용하지 
+      않을 것임
+       */}
+      {coins.map((coin) =>
+       <li>
+        {coin.name} ({coin.symbol})
+      : ${coin.quotes.USD.price} USD 
+      </li>
+      )}
     </ul>
-    </div>
+   </div>
   );
 }
 export default App;
