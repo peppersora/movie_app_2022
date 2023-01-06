@@ -12,7 +12,11 @@ function App(){
       다시말해, 한번에 하나의 route만 렌더링하기위해서
     */}
     <Switch>
-    <Route path="/movie">
+    <Route path="/hello">
+      <h1>Hello~</h1>
+    </Route>
+    {/* id를 사용하면 movie/1,movie/2,movie/3다 가능...! */}
+    <Route path="/movie/:id">
       <Detail/>
     </Route>
 

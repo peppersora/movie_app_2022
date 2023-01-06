@@ -21,7 +21,6 @@ function Home(){
   },[]);
   // console.log(movies);
   return(
-
    <div>
      {loading ? (
         <h1>Loading...</h1>
@@ -35,6 +34,7 @@ function Home(){
           */
         <Movie 
       key={movie.id}
+      id={movie}
       coverImg={movie.medium_cover_image}
               title={movie.title}
               summary={movie.summary}
