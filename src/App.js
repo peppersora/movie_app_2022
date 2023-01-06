@@ -1,50 +1,25 @@
-import { useEffect, useState } from "react";
+// 이 페이지가 url 그 자체이다. 
+// url 다음에 home인지 detail인지에 따라 다르게 보여줄것임
+// react-router-dom은 아주 쿨한 컴포넌트의 모음집
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Detail from "./routes/Detail";
+import Home from "./routes/Home";
 
 
 function App(){
-  // 로딩을 위한 state 
-  // loading의 기본값은 true로 설정
-  const [loading, setLoading] = useState(true);
-  // 코인리스트를 위한 state
-  const [coins, setCoins] = useState([]);
-  // 2. 코인 api 준비
-  // useEffect를 사용해서 한번만 실행시킬것이므로 빈 배열을 준비
-  // 3. money 준비
-  const [money,setMoney] = useState([]);
+  return <Router>
+    {/* switch의 역할은 route를 찾는다
+      다시말해, 한번에 하나의 route만 렌더링하기위해서
+    */}
+    <Switch>
+    <Route path="/movie">
+      <Detail/>
+    </Route>
 
-  useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
-    .then((response) => response.json())
-    .then((json) => {
-      setCoins(json);
-      setLoading(false); 
-    });
-  },[]);
-  
-  const onchange = (event) =>{
-    setMoney(event.target.value);
-    
-  };
-  return(
-   <div>
-    <h1>The Coins!({coins.length})</h1>
-    <input
-    onChange={onchange}
-    value={money}
-    type="number"
-    placeholder="How much you have?"
-    />
-   
-    {loading ? <strong>Loading...</strong> :
-    <select>
-      {coins.map((coin) =>
-      <option>{coin.name}({coin.symbol}) : 
-      {money / coin.quotes.USD.price} {coin.symbol}
-      </option>
-      )}
-      
-      </select>}
-   </div>
-  );
+    <Route path="/">
+      <Home/>
+    </Route>
+    </Switch>
+  </Router>;
 }
 export default App;
