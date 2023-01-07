@@ -1,3 +1,4 @@
+import React from "react";
 import propTypes, { string } from "prop-types";
 import { Link } from "react-router-dom";
 function Movie({ id,
@@ -7,18 +8,22 @@ function Movie({ id,
                 genres,
 }) {
     return(   
-         <div>
-           <img src={coverImg}
+      <div>
+         <img src={coverImg}
            alt={title}/>
-           <h2><Link to={`/movie/${id}`}>{title}</Link></h2>
+           <h2>
+            <Link
+           to={`/movie/${id}`}>{title}
+           </Link>
+           </h2>
             <p>{summary}</p>
            <ul>
              {genres.map((g) =>(
                <li key={g}>{g}</li>
              ))}
            </ul>
-           </div>
-           );    
+      </div>
+    );   
      };
 
      Movie.prototype = {
