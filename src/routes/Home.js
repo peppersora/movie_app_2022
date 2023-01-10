@@ -7,7 +7,7 @@ function Home(){
 // console.log(props);
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
-
+console.log(movies);
   const getMovies = async() => {
     const json = await(
       await fetch(
