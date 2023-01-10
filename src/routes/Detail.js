@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 
+
+// 세부사항
 
 function Detail(){
   const { id } = useParams();
   // console.log(id);
-  
+
   let [detail, setDetail] = useState([0]);
   console.log(detail);
   const getMovie = async () => {
@@ -23,8 +24,7 @@ function Detail(){
 
   return(   
     <div>
-     <img src={detail.medium_cover_image
-}
+     <img src={detail.medium_cover_image}
            alt={detail.title}/>
       <h1>{detail.title_long}</h1>
       <h3>{detail.rating}</h3> 
@@ -33,7 +33,6 @@ function Detail(){
     </div>
   );   
     
- 
 }
 
 export default Detail;

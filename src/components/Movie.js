@@ -6,6 +6,7 @@ function Movie({ id,
                 title,
                 summary,
                 genres,
+                rating,
 }) {
     return(   
       <div>
@@ -13,7 +14,7 @@ function Movie({ id,
            alt={title}/>
            <h2>
             <Link
-           to={`/movie/${id}`}>{title}
+           to={`/movie/${id}`}>{title}{rating}
            </Link>
            </h2>
             <p>{summary}</p>
@@ -32,6 +33,7 @@ function Movie({ id,
         title: propTypes.string.isRequired,
         summary: propTypes.string.isRequired,
         genres: propTypes.arrayOf(propTypes.string.isRequired),
+        rating: propTypes.number.isRequired,
      };
 
 export default Movie;
